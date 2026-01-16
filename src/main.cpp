@@ -3,9 +3,9 @@
 #include <sstream>
 #include <optional>
 #include <vector>
-#include "./tokenization.hpp"
-#include "./parser.hpp"
-#include "./generator.hpp"
+#include "tokenization.hpp"
+#include "parser.hpp"
+#include "generator.hpp"
 
 int main(int argc, char* argv[]) {
     if(argc < 2) {
@@ -27,11 +27,12 @@ int main(int argc, char* argv[]) {
 
     Tokenizer tokenizer(std::move(file_content));
     std::vector<Token> tokens = tokenizer.tokenize();
+    
     Parser parser(std::move(tokens));
     std::optional<NodeExit> root = parser.parse();
     
     if(!root.has_value()){
-        std::cerr << "No Nodes genarated" << std::endl;
+        std::cerr << "No Nodes generated" << std::endl;
         return EXIT_FAILURE;
     }
     Generator generator(root.value());

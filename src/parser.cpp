@@ -48,7 +48,7 @@ std::optional<NodeExpr> Parser::parse_expr() {
 /*
     16/01/26
     ----- WILL BE REFACTORED ----
-    Parses the toknes and returns a NodeExit
+    Parses the tokens and returns a NodeExit
 
 */
 std::optional<NodeExit> Parser::parse() {
