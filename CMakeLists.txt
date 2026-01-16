@@ -5,4 +5,9 @@ project(uranium)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_BUILD_TYPE Debug)
 
-add_executable(uran src/main.cpp)
+set(SOURCES 
+    src/main.cpp
+    src/parser.cpp
+)
+
+add_executable(uran ${SOURCES})
