@@ -3,9 +3,9 @@
 #include <sstream>
 #include <optional>
 #include <vector>
-#include "tokenization.hpp"
-#include "parser.hpp"
-#include "generator.hpp"
+#include "./inc/tokenization.hpp"
+#include "./inc/parser.hpp"
+#include "./inc/generator.hpp"
 
 int main(int argc, char* argv[]) {
     if(argc < 2) {
@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
     Tokenizer tokenizer(std::move(file_content));
     std::vector<Token> tokens = tokenizer.tokenize();
-    
+
     Parser parser(std::move(tokens));
     std::optional<NodeExit> root = parser.parse();
     
