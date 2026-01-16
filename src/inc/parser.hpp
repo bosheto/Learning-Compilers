@@ -4,7 +4,7 @@
 #include <optional>
 #include <vector>
 #include <iostream>
-#include "./tokenization.hpp"
+#include "tokenization.hpp"
 
 
     struct NodeExpr {

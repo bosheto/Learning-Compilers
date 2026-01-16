@@ -8,6 +8,7 @@ set(CMAKE_BUILD_TYPE Debug)
 set(SOURCES 
     src/main.cpp
     src/parser.cpp
+    src/tokenization.cpp
 )
 
 add_executable(uran ${SOURCES})

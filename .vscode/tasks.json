@@ -33,7 +33,7 @@
         {
             "label": "CMake: Build and Run",
             "type": "shell",
-            "command": "./uran ../src/uranium_src/test.ur",
+            "command": "./uran ../uranium_src/test.ur",
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
