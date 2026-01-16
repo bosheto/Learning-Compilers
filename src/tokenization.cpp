@@ -33,13 +33,16 @@ std::vector<Token> Tokenizer::tokenize() {
             }
 
             if(buffer == "exit"){
-                tokens.push_back({.type=TokenType::_exit});
-                buffer.clear();
-                continue;
+                if(peek().has_value() && peek().value() == '('){
+                    tokens.push_back({.type=TokenType::_exit});
+                    buffer.clear();
+                    continue;
+                }else{
+                    compiler_error_and_exit("Syntax error must have a ( after exit", CompilerStage::Tokenize);    
+                }
             }
             else{
-                std::cerr << "Error in source code!" << std::endl;
-                exit(EXIT_FAILURE);
+                compiler_error_and_exit("Unknow expresion", CompilerStage::Tokenize);
             }
         }
         
@@ -56,7 +59,16 @@ std::vector<Token> Tokenizer::tokenize() {
             buffer.clear();
             
         }
-
+        // Open parenthesis
+        else if (peek().value() == '(') {
+            consume();
+            tokens.push_back({.type=TokenType::open_parenthesis});            
+        }
+        // Close parenthesis
+        else if (peek().value() == ')'){
+            consume();
+            tokens.push_back({.type=TokenType::close_parenthesis});
+        }
         // Semicolon
         else if(peek().value() == ';') {
             consume();
@@ -69,8 +81,7 @@ std::vector<Token> Tokenizer::tokenize() {
             consume();
             continue;
         } else {
-                std::cerr << "Error in source code! end of token tree!" << std::endl;
-                exit(EXIT_FAILURE);
+            compiler_error_and_exit("No ; at end of line!", CompilerStage::Tokenize);
         }
     }
 

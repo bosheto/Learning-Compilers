@@ -1,16 +1,11 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <optional>
-#include <vector>
+#include "./inc/utils.hpp"
 #include "./inc/tokenization.hpp"
 #include "./inc/parser.hpp"
 #include "./inc/generator.hpp"
 
 int main(int argc, char* argv[]) {
     if(argc < 2) {
-        std::cout << "No input file specified" << std::endl;
-        return EXIT_FAILURE;
+        compiler_error_and_exit("No input file specified");
     }
 
 
@@ -27,13 +22,12 @@ int main(int argc, char* argv[]) {
 
     Tokenizer tokenizer(std::move(file_content));
     std::vector<Token> tokens = tokenizer.tokenize();
-
+    
     Parser parser(std::move(tokens));
     std::optional<NodeExit> root = parser.parse();
     
     if(!root.has_value()){
-        std::cerr << "No Nodes generated" << std::endl;
-        return EXIT_FAILURE;
+        compiler_error_and_exit("No Nodes generated");
     }
     Generator generator(root.value());
 

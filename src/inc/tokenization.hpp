@@ -1,14 +1,15 @@
 #pragma once
-#include <string>
-#include <sstream>
-#include <optional>
-#include <vector>
-#include <iostream>
+#include "utils.hpp"
 
 enum class TokenType {
     _exit,
     int_lit,
-    semicolon
+    semicolon,
+    open_bracket,
+    close_bracket,
+    identifier,
+    open_parenthesis,
+    close_parenthesis
 };
 
 struct Token {

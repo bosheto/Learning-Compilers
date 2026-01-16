@@ -56,26 +56,36 @@ std::optional<NodeExit> Parser::parse() {
     
     while (peek().has_value())
     {
-        if(peek().value().type == TokenType::_exit){
+        if( peek().value().type == TokenType::_exit && peek(1).has_value() 
+            && peek(1).value().type == TokenType::open_parenthesis){
 
-            consume();
+            consume(); // consume exit keyword
+            consume(); // consume ( 
             /*  
                 Using auto is clever since the return of parse_expr is an optional 
-                If it dosent have a value it will evaluate to false and go to the else block
+                If it doesn't have a value it will evaluate to false and go to the else block
                 if it has a value it will evaluate to true and we keep the value. Quite cool.
             */
             if (auto node_expr = parse_expr()){
-                root = NodeExit { .expr = node_expr.value()}; 
+                root = NodeExit { .expr = node_expr.value()}; // consume expresion 
             }else {
-                std::cerr << "Invalid expression" << std::endl;
-                exit(EXIT_FAILURE);
+                compiler_error_and_exit("Invalid expresion", CompilerStage::Parse);
             }
-            if(peek().has_value() || peek().value().type == TokenType::semicolon){
+            
+            if(peek().has_value() && peek().value().type == TokenType::close_parenthesis){
+                consume(); // Consume ')' 
+            }else{
+                compiler_error_and_exit("Missing )", CompilerStage::Parse);
+            }
+
+            // Semicolon
+            if(peek().has_value() && peek().value().type == TokenType::semicolon){
                 consume();
             }else{
-                std::cerr << "Invalid expression" << std::endl;
-                exit(EXIT_FAILURE);
+                compiler_error_and_exit("Missing ;", CompilerStage::Parse);
             }
+        }else{
+            compiler_error_and_exit("Error in syntax no opening (", CompilerStage::Parse);
         }
     }
 
