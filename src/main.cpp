@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
     Tokenizer tokenizer(std::move(file_content));
     std::vector<Token> tokens = tokenizer.tokenize();
-
+    
     Parser parser(std::move(tokens));
     std::optional<NodeExit> root = parser.parse();
     

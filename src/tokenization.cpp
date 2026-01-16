@@ -56,7 +56,16 @@ std::vector<Token> Tokenizer::tokenize() {
             buffer.clear();
             
         }
-
+        // Open parenthesis
+        else if (peek().value() == '(') {
+            consume();
+            tokens.push_back({.type=TokenType::open_parenthesis});            
+        }
+        // Close parenthesis
+        else if (peek().value() == ')'){
+            consume();
+            tokens.push_back({.type=TokenType::close_parenthesis});
+        }
         // Semicolon
         else if(peek().value() == ';') {
             consume();

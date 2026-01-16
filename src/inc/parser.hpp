@@ -1,11 +1,15 @@
 #pragma once
-#include <string>
-#include <sstream>
-#include <optional>
-#include <vector>
-#include <iostream>
+
+#include "utils.hpp"
 #include "tokenization.hpp"
 
+    struct NodeIntLit {
+        Token int_lit;
+    };
+
+    struct NodeIdent {
+        Token identifier;
+    };
 
     struct NodeExpr {
         Token int_lit;
