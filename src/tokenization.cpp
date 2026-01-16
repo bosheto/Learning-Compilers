@@ -38,8 +38,7 @@ std::vector<Token> Tokenizer::tokenize() {
                 continue;
             }
             else{
-                std::cerr << "Error in source code!" << std::endl;
-                exit(EXIT_FAILURE);
+                compiler_error_and_exit("Unknow keyword", CompilerStage::Tokenize);
             }
         }
         
@@ -78,8 +77,7 @@ std::vector<Token> Tokenizer::tokenize() {
             consume();
             continue;
         } else {
-                std::cerr << "Error in source code! end of token tree!" << std::endl;
-                exit(EXIT_FAILURE);
+            compiler_error_and_exit("No ; at end of line!", CompilerStage::Tokenize);
         }
     }
 

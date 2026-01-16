@@ -69,27 +69,23 @@ std::optional<NodeExit> Parser::parse() {
             if (auto node_expr = parse_expr()){
                 root = NodeExit { .expr = node_expr.value()}; // consume expresion 
             }else {
-                std::cerr << "Invalid expression" << std::endl;
-                exit(EXIT_FAILURE);
+                compiler_error_and_exit("Invalid expresion", CompilerStage::Parse);
             }
             
             if(peek().has_value() && peek().value().type == TokenType::close_parenthesis){
                 consume(); // Consume ')' 
             }else{
-                std::cerr << "Missing )!" << std::endl;
-                exit(EXIT_FAILURE);
+                compiler_error_and_exit("Missing )", CompilerStage::Parse);
             }
 
             // Semicolon
             if(peek().has_value() && peek().value().type == TokenType::semicolon){
                 consume();
             }else{
-                std::cerr << "Missing ;" << std::endl;
-                exit(EXIT_FAILURE);
+                compiler_error_and_exit("Missing ;", CompilerStage::Parse);
             }
         }else{
-            std::cerr << "      Error in syntax no opening ( <-------------" << std::endl;
-            exit(EXIT_FAILURE);
+            compiler_error_and_exit("Error in syntax no opening (", CompilerStage::Parse);
         }
     }
 
