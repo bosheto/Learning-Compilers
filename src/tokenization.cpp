@@ -33,12 +33,16 @@ std::vector<Token> Tokenizer::tokenize() {
             }
 
             if(buffer == "exit"){
-                tokens.push_back({.type=TokenType::_exit});
-                buffer.clear();
-                continue;
+                if(peek().has_value() && peek().value() == '('){
+                    tokens.push_back({.type=TokenType::_exit});
+                    buffer.clear();
+                    continue;
+                }else{
+                    compiler_error_and_exit("Syntax error must have a ( after exit", CompilerStage::Tokenize);    
+                }
             }
             else{
-                compiler_error_and_exit("Unknow keyword", CompilerStage::Tokenize);
+                compiler_error_and_exit("Unknow expresion", CompilerStage::Tokenize);
             }
         }
         
